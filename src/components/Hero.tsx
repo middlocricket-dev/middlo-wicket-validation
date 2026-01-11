@@ -27,9 +27,9 @@ export const Hero = ({ onSelectUserType }: HeroProps) => {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-16 animate-fade-in">
-          <Logo size="md" />
+        {/* Header with prominent logo */}
+        <header className="flex flex-col items-center mb-12 animate-fade-in">
+          <Logo size="lg" className="mb-4" />
           <div className="flex items-center gap-2 text-sm text-primary-foreground/80">
             <span className="hidden sm:inline">Launching in</span>
             <span className="px-3 py-1 bg-primary-foreground/10 backdrop-blur-sm rounded-full font-semibold text-primary-foreground">
