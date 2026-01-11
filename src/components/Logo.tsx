@@ -1,27 +1,23 @@
 import { cn } from "@/lib/utils";
+import middloLogo from "@/assets/middlo-logo.png";
 
 interface LogoProps {
   className?: string;
-  variant?: 'dark' | 'light';
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export const Logo = ({ className, variant = 'dark' }: LogoProps) => {
+export const Logo = ({ className, size = 'md' }: LogoProps) => {
+  const sizeClasses = {
+    sm: 'h-10',
+    md: 'h-14',
+    lg: 'h-20',
+  };
+
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <div className={cn(
-        "w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-lg",
-        variant === 'dark' 
-          ? "bg-primary text-primary-foreground" 
-          : "bg-primary-foreground text-primary"
-      )}>
-        M
-      </div>
-      <span className={cn(
-        "font-extrabold text-2xl tracking-tight",
-        variant === 'dark' ? "text-foreground" : "text-primary-foreground"
-      )}>
-        MIDDLO
-      </span>
-    </div>
+    <img 
+      src={middloLogo} 
+      alt="MIDDLO" 
+      className={cn(sizeClasses[size], "w-auto object-contain", className)}
+    />
   );
 };
