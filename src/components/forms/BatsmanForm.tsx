@@ -15,7 +15,7 @@ const batsmanSchema = z.object({
   playingLevel: z.string().min(1, "Please select your level"),
   currentBookingMethod: z.string().min(1, "Please select a method"),
   biggestProblem: z.string().min(10, "Please describe your problem (min 10 characters)").max(500),
-  willingnessToPay: z.string().min(1, "Please select a range"),
+  willingnessToPay: z.string().regex(/^\d+$/, "Please enter a valid amount").refine((val) => parseInt(val) >= 50 && parseInt(val) <= 10000, "Amount must be between ₹50 and ₹10,000"),
   whatsapp: z.string().regex(/^[6-9]\d{9}$/, "Enter valid 10-digit Indian mobile number"),
 });
 
@@ -215,19 +215,16 @@ export const BatsmanForm = ({ onBack }: BatsmanFormProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="willingnessToPay">How much would you pay per hour for quality practice? *</Label>
-              <Select value={formData.willingnessToPay} onValueChange={(v) => updateField("willingnessToPay", v)}>
-                <SelectTrigger className={errors.willingnessToPay ? "border-destructive" : ""}>
-                  <SelectValue placeholder="Select range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="200-400">₹200 - ₹400</SelectItem>
-                  <SelectItem value="400-600">₹400 - ₹600</SelectItem>
-                  <SelectItem value="600-800">₹600 - ₹800</SelectItem>
-                  <SelectItem value="800-1000">₹800 - ₹1,000</SelectItem>
-                  <SelectItem value="1000+">₹1,000+</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="willingnessToPay">How much would you pay per hour for quality practice? (₹) *</Label>
+              <Input
+                id="willingnessToPay"
+                type="text"
+                inputMode="numeric"
+                placeholder="Enter amount in rupees (e.g., 500)"
+                value={formData.willingnessToPay}
+                onChange={(e) => updateField("willingnessToPay", e.target.value.replace(/\D/g, '').slice(0, 5))}
+                className={errors.willingnessToPay ? "border-destructive" : ""}
+              />
               {errors.willingnessToPay && (
                 <p className="text-destructive text-sm flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" /> {errors.willingnessToPay}
